@@ -1,6 +1,3 @@
-# Ignore the inventory file for Ceph playbooks.
-ceph/inventory.py
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
