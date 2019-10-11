@@ -25,20 +25,20 @@ def setupRepos(conn, logging):
 	logging.info("[X] Added the Ceph repos, and installed ceph-deploy.")
 
 
-def setupNTP(node, conn, logging):
-	logging.info(f"[X] Setting up NTP on {node} ==>")
+def setupNTP(hostname, conn, logging):
+	logging.info(f"[X] Setting up NTP on {hostname} ==>")
 	setNTPServer = conn.run('ntpdate -s time.nist.gov')
 	updateYum = conn.run('yum update -y')
 	installNTP = conn.run('yum install -y ntp')
 	enableNTPD = conn.run('systemctl enable ntpd')
 	startNTPD = conn.run('systemctl start ntpd')
-	logging.info("[X] Finished setting up NTPD.")
+	logging.info(f"[X] Finished setting up NTPD on {hostname}.")
 
 
-def addRemoteHosts(node, conn, logging):
-	logging.info(f"[X] Adding Ceph nodes to the /etc/hosts file on {node} ==>")
+def addRemoteHosts(hostname, conn, logging):
+	logging.info(f"[X] Adding Ceph nodes to the /etc/hosts file on {hostname} ==>")
 	addHost = conn.run(f"cat << EOM >> /etc/hosts \n {inventory.HOST_ENTRIES} \n")
-	logging.info(f"[X] Added hosts to the /etc/hosts file on {node}.")
+	logging.info(f"[X] Added hosts to the /etc/hosts file on {hostname}.")
 
 
 
