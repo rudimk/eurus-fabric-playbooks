@@ -27,3 +27,6 @@ if __name__ == '__main__':
 		prepareNodes.setupNTP(node['hostname'], conn, logging)
 		prepareNodes.addRemoteHosts(node['hostname'], conn, logging)
 	deployCeph.initialiseCephConfig(getLocalConnection(), getHostString(), logging)
+	deployCeph.installCephBinaries(getLocalConnection(), getHostString(), logging)
+	deployCeph.installCephMon(getLocalConnection(), logging)
+	deployCeph.installCephAdmin(getLocalConnection(), getHostString(), logging)
