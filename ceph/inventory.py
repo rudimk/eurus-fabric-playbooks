@@ -3,3 +3,7 @@
 # Also make sure the node these playbooks run on can SSH into the Ceph nodes with a SSH keypair.
 
 CEPH_NODES = ()
+
+# The path to the SSH private key that will be used
+
+SSH_KEY = ''
