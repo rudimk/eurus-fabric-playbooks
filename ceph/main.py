@@ -26,5 +26,4 @@ if __name__ == '__main__':
 		conn = getRemoteConnection(node['hostname'])
 		prepareNodes.setupNTP(node['hostname'], conn, logging)
 		prepareNodes.addRemoteHosts(node['hostname'], conn, logging)
-
 	deployCeph.initialiseCephConfig(getLocalConnection(), getHostString(), logging)
