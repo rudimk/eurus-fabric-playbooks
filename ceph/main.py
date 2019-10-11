@@ -3,6 +3,7 @@ import inventory
 import logging
 
 import prepareNodes
+import deployCeph
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -12,10 +13,18 @@ def getRemoteConnection(hostname):
 def getLocalConnection():
 	return Connection(host='localhost')
 
+def getHostString():
+	hostnames = ""
+	for node in inventory.CEPH_NODES:
+		hostnames += node['hostname'] + ' '
+	return hostnames
+
 if __name__ == '__main__':
 	prepareNodes.addLocalHosts(getLocalConnection(), logging)
 	prepareNodes.setupRepos(getLocalConnection(), logging)
 	for node in inventory.CEPH_NODES:
 		conn = getRemoteConnection(node['hostname'])
-		prepareNodes.setupNTP(node, conn, logging)
-		prepareNodes.addRemoteHosts(node, conn, logging)
+		prepareNodes.setupNTP(node['hostname'], conn, logging)
+		prepareNodes.addRemoteHosts(node['hostname'], conn, logging)
+
+	deployCeph.initialiseCephConfig(getLocalConnection(), getHostString(), logging)
