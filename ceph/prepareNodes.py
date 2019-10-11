@@ -11,6 +11,20 @@ gpgkey=https://download.ceph.com/keys/release.asc
 """
 
 
+def addLocalHosts(conn, logging):
+	logging.info(f"[X] Adding Ceph nodes to the /etc/hosts file on the local machine ==>")
+	addHost = conn.run(f"cat << EOM >> /etc/hosts \n {inventory.HOST_ENTRIES} \n")
+	logging.info("[X] Added hosts to the local machine.")
+
+
+def setupRepos(conn, logging):
+	logging.info("[X] Adding the Ceph repos to the local machine ==>")
+	addRepos = conn.local(f"release=mimic && cat << EOM >> /etc/yum.repos.d/ceph.repo \n {CEPH_REPO} \n")
+	updateRepos = conn.local("yum update -y")
+	installCephDeploy = conn.local("yum install ceph-deploy -y")
+	logging.info("[X] Added the Ceph repos, and installed ceph-deploy.")
+
+
 def setupNTP(node, conn, logging):
 	logging.info(f"[X] Setting up NTP on {node} ==>")
 	setNTPServer = conn.run('ntpdate -s time.nist.gov')
@@ -21,19 +35,11 @@ def setupNTP(node, conn, logging):
 	logging.info("[X] Finished setting up NTPD.")
 
 
-def addHosts(node, conn, logging):
-	conn = getRemoteConnection(node)
+def addRemoteHosts(node, conn, logging):
 	logging.info(f"[X] Adding Ceph nodes to the /etc/hosts file on {node} ==>")
 	addHost = conn.run(f"cat << EOM >> /etc/hosts \n {inventory.HOST_ENTRIES} \n")
-	logging.info("[X] Added hosts.")
+	logging.info(f"[X] Added hosts to the /etc/hosts file on {node}.")
 
-
-def setupRepos(conn, logging):
-	logging.info("[X] Adding the Ceph repos to the local machine ==>")
-	addRepos = conn.local(f"release=mimic && cat << EOM >> /etc/yum.repos.d/ceph.repo \n {CEPH_REPO} \n")
-	updateRepos = conn.local("yum update -y")
-	installCephDeploy = conn.local("yum install ceph-deploy -y")
-	logging.info("[X] Added the Ceph repos, and installed ceph-deploy.")
 
 
 
