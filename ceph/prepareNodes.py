@@ -21,6 +21,7 @@ def setupRepos(conn, logging):
 	logging.info("[X] Adding the Ceph repos to the local machine ==>")
 	addRepos = conn.local(f"release=mimic && cat << EOM >> /etc/yum.repos.d/ceph.repo \n {CEPH_REPO} \n")
 	updateRepos = conn.local("yum update -y")
+	installPythonSetuptools = conn.local("yum install -y python-setuptools")
 	installCephDeploy = conn.local("yum install ceph-deploy -y")
 	logging.info("[X] Added the Ceph repos, and installed ceph-deploy.")
 
