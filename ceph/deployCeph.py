@@ -18,3 +18,8 @@ def installCephMon(conn, logging):
 	conn.local("cd /root/CEPH-CLUSTER && ceph-deploy mon create-initial")
 	logging.info("Installed Ceph MONs on all nodes.")
 
+
+def installCephAdmin(conn, hostnames, logging):
+	logging.info("[X] Installing Ceph admin components on all nodes ==>")
+	conn.local(f"cd /root/CEPH-CLUSTER && ceph-deploy admin {hostnames}")
+	logging.info("Installed Ceph admin components on all nodes.")
