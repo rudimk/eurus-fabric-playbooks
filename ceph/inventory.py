@@ -7,3 +7,12 @@ CEPH_NODES = ()
 # The path to the SSH private key that will be used
 
 SSH_KEY = ''
+
+# Update this constant with host entries that will be populated in /etc/hosts for all nodes.
+# Use the same syntax as you would in the /etc/hosts file.
+
+HOST_ENTRIES = """
+
+
+
+"""
