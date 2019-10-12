@@ -20,3 +20,4 @@ if __name__ == '__main__':
 	for node in inventory.K3S_WORKER_NODES:
 		k3sCluster.addRemoteHosts(node['hostname'], getRemoteConnection(node['hostname']), logging)
 		k3sCluster.updatePackages(node['hostname'], getRemoteConnection(node['hostname']), logging)
+	k3sToken = k3sCluster.installK3sMaster(inventory.K3S_MASTER_NODE['hostname'], getRemoteConnection(inventory.K3S_MASTER_NODE['hostname']), logging)
