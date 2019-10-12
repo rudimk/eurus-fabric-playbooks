@@ -33,6 +33,7 @@ def setupNTP(hostname, conn, logging):
 	updateYum = conn.run("yum update -y")
 	installNTPDate = conn.run("yum install -y ntpdate")
 	setNTPServer = conn.run('ntpdate -s time.nist.gov')
+	logging.debug(setNTPServer.stdout)
 	updateYum = conn.run('yum update -y')
 	installNTP = conn.run('yum install -y ntp')
 	enableNTPD = conn.run('systemctl enable ntpd')
