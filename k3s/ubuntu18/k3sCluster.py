@@ -27,3 +27,9 @@ def installK3sMaster(hostname, conn, logging):
 	conn.get(remote="/etc/rancher/k3s/k3s.yaml", local="/root/kubeconfig.yaml")
 	logging.info("[X Downloaded the cluster's kubeconfig to /root/kubeconfig.yaml.")
 	return k3sToken
+
+
+def installK3sWorker(hostname, conn, masterHostName, k3sToken, logging):
+	logging.info(f"[X] Deploying the k3s worker agent on {hostname} ==>")
+	conn.run(f"curl -sfL https://get.k3s.io | K3S_URL=https://{masterHostName}:6443 K3S_TOKEN={k3sToken} sh -")
+	logging.info(f"Deployed k3s worker agent on {hostname}.")
