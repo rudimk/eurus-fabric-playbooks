@@ -1,11 +1,11 @@
 # Ceph
 Ceph is a fucking amazing distributed, replicated and fault-tolerant storage system. 
-This playbook installs a working Ceph cluster.
+This playbook installs a working Ceph cluster on a bunch of CentOS7 nodes, using a CentOS7-based deployment node.
 
 ## Prerequisites
 
 1. A deployment node where this playbook will run. 
-2. Nodes for hosting Ceph OSDs and MONs with root access over SSH. Currently, this playbook supports CentOS 7. 
+2. Nodes for hosting Ceph OSDs and MONs with root access over SSH. 
 
 ## Installation
 
