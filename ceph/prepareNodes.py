@@ -1,3 +1,5 @@
+import inventory
+
 CEPH_REPO = """
 
 [ceph-noarch]
