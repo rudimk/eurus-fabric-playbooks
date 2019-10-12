@@ -30,6 +30,8 @@ def setupRepos(conn, logging):
 
 def setupNTP(hostname, conn, logging):
 	logging.info(f"[X] Setting up NTP on {hostname} ==>")
+	updateYum = conn.run("yum update -y")
+	installNTPDate = conn.run("yum install -y ntpdate")
 	setNTPServer = conn.run('ntpdate -s time.nist.gov')
 	updateYum = conn.run('yum update -y')
 	installNTP = conn.run('yum install -y ntp')
