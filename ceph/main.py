@@ -8,7 +8,7 @@ import deployCeph
 logging.basicConfig(level=logging.DEBUG)
 
 def getRemoteConnection(hostname):
-	return Connection(host=hostname, user='root', key_filename=inventory.SSH_KEY)
+	return Connection(host=hostname, user='root')
 
 def getLocalConnection():
 	return Connection(host='localhost')
