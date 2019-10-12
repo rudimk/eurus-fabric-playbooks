@@ -1,4 +1,5 @@
 import time
+import inventory
 
 def initialiseCephConfig(conn, hostnames, logging):
 	logging.info("Initialising Ceph cluster configuration on the local machine ==>")
@@ -52,3 +53,11 @@ def installCephOSD(hostname, conn, volumes, logging):
 		conn.local(f"ceph-deploy osd create --data {volume} {hostname}")
 		logging.info(f"[X] Deployed Ceph OSD on {hostname}:{volume}.")
 	logging.info(f"[X] Deployed Ceph OSDs on {hostname}.")
+
+
+def configureCephDashboard(hostname, ip, conn, logging):
+	logging.info(f"[X] Configuring Ceph dashboard on {hostname} ==>")
+	conn.run("ceph config set mgr mgr/dashboard/ssl false")
+	conn.run("ceph mgr module enable dashboard")
+	conn.run(f"ceph dashboard set-login-credentials {inventory.CEPH_ADMIN_USERNAME} {inventory.CEPH_ADMIN_PASSWORD}")
+	logging.info("[X] Configured the Ceph admin dashboard. Access it at http://{ip}:8080.")

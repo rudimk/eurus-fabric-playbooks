@@ -20,6 +20,7 @@ def getHostString():
 	return hostnames
 
 if __name__ == '__main__':
+	logging.info(f"[X] Starting Ceph cluster deployment on {getHostString()}")
 	prepareNodes.addLocalHosts(getLocalConnection(), logging)
 	prepareNodes.setupRepos(getLocalConnection(), logging)
 	for node in inventory.CEPH_NODES:
@@ -36,3 +37,6 @@ if __name__ == '__main__':
 	deployCeph.installCephManager(getLocalConnection(), getHostString(), logging)
 	for node in inventory.CEPH_NODES:
 		deployCeph.installCephOSD(node['hostname'], getLocalConnection(), node['volumes'], logging)
+	deployCeph.configureCephDashboard(inventory.CEPH_NODES[0]['hostname'], inventory.CEPH_NODES[0]['ip'], 
+		getLocalConnection(), logging)
+	logging.info(f"[X Finished Ceph cluster deployment on {getHostString()}.")
