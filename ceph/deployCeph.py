@@ -36,3 +36,10 @@ def syncNTP(hostname, conn, logging):
 	time.sleep(10)
 	logging.info(f"[X] Restarting Ceph components on {hostname} ==>")
 	conn.run("systemctl restart ceph.target")
+	logging.info(f"[X] Completed NTP sync on {hostname}.")
+
+
+def installCephManager(conn, hostnames, logging):
+	logging.info("[X] Installing Ceph MGRs on all nodes ==>")
+	conn.local(f"cd /root/CEPH-CLUSTER && ceph-deploy mgr create {hostnames}")
+	logging.info("[X] Installed Ceph MGRs on all nodes.")
