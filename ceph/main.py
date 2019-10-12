@@ -38,5 +38,5 @@ if __name__ == '__main__':
 	for node in inventory.CEPH_NODES:
 		deployCeph.installCephOSD(node['hostname'], getLocalConnection(), node['volumes'], logging)
 	deployCeph.configureCephDashboard(inventory.CEPH_NODES[0]['hostname'], inventory.CEPH_NODES[0]['ip'], 
-		getLocalConnection(), logging)
+		getRemoteConnection(inventory.CEPH_NODES[0]['hostname']), logging)
 	logging.info(f"[X Finished Ceph cluster deployment on {getHostString()}.")
