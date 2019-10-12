@@ -34,3 +34,5 @@ if __name__ == '__main__':
 		conn = getRemoteConnection(node['hostname'])
 		deployCeph.syncNTP(node['hostname'], conn, logging)
 	deployCeph.installCephManager(getLocalConnection(), getHostString(), logging)
+	for node in inventory.CEPH_NODES:
+		deployCeph.installCephOSD(node['hostname'], getLocalConnection(), node['volumes'], logging)

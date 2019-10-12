@@ -43,3 +43,12 @@ def installCephManager(conn, hostnames, logging):
 	logging.info("[X] Installing Ceph MGRs on all nodes ==>")
 	conn.local(f"cd /root/CEPH-CLUSTER && ceph-deploy mgr create {hostnames}")
 	logging.info("[X] Installed Ceph MGRs on all nodes.")
+
+
+def installCephOSD(hostname, conn, volumes, logging):
+	logging.info(f"[X] Initialising OSD creation on {hostname} ==>")
+	for volume in volumes:
+		logging.info(f"[X] Creating Ceph OSD on {hostname}:{volume} ==>")
+		conn.local(f"ceph-deploy osd create --data {volume} {hostname}")
+		logging.info(f"[X] Deployed Ceph OSD on {hostname}:{volume}.")
+	logging.info(f"[X] Deployed Ceph OSDs on {hostname}.")
