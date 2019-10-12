@@ -30,3 +30,6 @@ if __name__ == '__main__':
 	deployCeph.installCephBinaries(getLocalConnection(), getHostString(), logging)
 	deployCeph.installCephMon(getLocalConnection(), logging)
 	deployCeph.installCephAdmin(getLocalConnection(), getHostString(), logging)
+	for node in inventory.CEPH_NODES:
+		conn = getRemoteConnection(node['hostname'])
+		deployCeph.syncNTP(node['hostname'], conn, logging)

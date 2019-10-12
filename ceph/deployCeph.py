@@ -1,4 +1,4 @@
-
+import time
 
 def initialiseCephConfig(conn, hostnames, logging):
 	logging.info("Initialising Ceph cluster configuration on the local machine ==>")
@@ -23,3 +23,16 @@ def installCephAdmin(conn, hostnames, logging):
 	logging.info("[X] Installing Ceph admin components on all nodes ==>")
 	conn.local(f"cd /root/CEPH-CLUSTER && ceph-deploy admin {hostnames}")
 	logging.info("Installed Ceph admin components on all nodes.")
+
+
+def syncNTP(hostname, conn, logging):
+	logging.info(f"[X] Shutting down ntpd on {hostname} ==>")
+	conn.run("systemctl stop ntpd")
+	logging.info(f"[X] Updating timserver pool on {hostname} ==>")
+	conn.run("ntpdate -s time.nist.gov; ntpdate -s time.nist.gov; ntpdate -s time.nist.gov")
+	logging.info(f"[X] Restarting ntpd on {hostname} ==>")
+	conn.run("systemctl restart ntpd")
+	logging.info(f"[X] Waiting for 10 seconds before restarting Ceph components on {hostname} ==>")
+	time.sleep(10)
+	logging.info(f"[X] Restarting Ceph components on {hostname} ==>")
+	conn.run("systemctl restart ceph.target")
