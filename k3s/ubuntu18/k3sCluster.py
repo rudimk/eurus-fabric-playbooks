@@ -21,7 +21,7 @@ def updatePackages(hostname, conn, logging):
 
 def installK3sMaster(hostname, conn, logging):
 	logging.info(f"[X] Deploying k3s master on {hostname} ==>")
-	conn.run("curl -sfL https://get.k3s.io | sh -")
+	conn.run('curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--bind-address 0.0.0.0" sh -')
 	k3sToken = conn.run("cat /var/lib/rancher/k3s/server/node-token").stdout.strip()
 	logging.info(f"[X] K3S Agent Token: {k3sToken}")
 	conn.get(remote="/etc/rancher/k3s/k3s.yaml", local="/root/kubeconfig.yaml")
