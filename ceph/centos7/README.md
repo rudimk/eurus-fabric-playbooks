@@ -9,19 +9,26 @@ This playbook installs a working Ceph cluster on a bunch of CentOS7 nodes, using
 
 ## Installation
 
-1. On the deployment node, update yum and install Python 3.6:
+1. Clone this repository and install its dependencies:
+```
+git clone https://github.com/rudimk/eurus-fabric-playbooks.git
+cd eurus-fabric-playbooks
+pip install -r requirements.txt
+```
+
+2. On the deployment node, update yum and install Python 3.6:
 ```
 yum update
 yum install centos-release-scl
 yum install rh-python36
 ```
 
-2. To activate Python 3, you need to use scl to activate a new shell which uses Python 3 instead of the default Python 2 installation(yeah, CentOS is fucked up). Run the command below whenever you need to run the playbook(you could also put it in your `.bashrc` or `.bash_profile`):
+3. To activate Python 3, you need to use scl to activate a new shell which uses Python 3 instead of the default Python 2 installation(yeah, CentOS is fucked up). Run the command below whenever you need to run the playbook(you could also put it in your `.bashrc` or `.bash_profile`):
 ```
 scl enable rh-python36 bash
 ```
 
-3. Ensure that the nodes you intend to deploy Ceph on are accessible from the deployment node. Also make sure you can log into these nodes over SSH without a password. Here's a quick primer on creating a new keypair and setting up password-less SSH auth:
+4. Ensure that the nodes you intend to deploy Ceph on are accessible from the deployment node. Also make sure you can log into these nodes over SSH without a password. Here's a quick primer on creating a new keypair and setting up password-less SSH auth:
     
     a. Create a new keypair without a passphrase:
     ```
@@ -39,7 +46,7 @@ scl enable rh-python36 bash
     eval "$(ssh-agent -s)" && ssh-add ~/.ssh/id_rsa_ceph
     ```
 
-4. Finally, it's time to populate the inventory file. Open `ceph/inventory.py` and fill in the following details:
+5. Finally, it's time to populate the inventory file. Open `ceph/centos7/inventory.py` and fill in the following details:
 
     a. First, enter a list of Ceph node hostnames in the CEPH_NODES variable, along with their IP addresses and the volumes you wish to use as Ceph OSDs. Here's an example:
     ```
@@ -66,16 +73,9 @@ scl enable rh-python36 bash
     CEPH_ADMIN_PASSWORD = "password"
     ```
 
-5. Clone this repository and install its dependencies:
-```
-git clone https://github.com/rudimk/eurus-fabric-playbooks.git
-cd eurus-fabric-playbooks
-pip install -r requirements.txt
-```
-
 6. Now you're all set. Navigate into the `ceph` directory and fire up `main.py`:
 ```
-cd ceph
+cd ceph/centos7
 python main.py
 ```
 
