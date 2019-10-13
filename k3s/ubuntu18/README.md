@@ -85,3 +85,6 @@ cp /root/kubeconfig.yaml /root/.kube/config
 kubectl get nodes
 ```
 
+## Next Steps:
+
+1. Persistent Storage with Ceph: [Manifests](https://github.com/rudimk/eurus-fabric-playbooks/tree/master/k3s/ubuntu18/manifests/ceph)
