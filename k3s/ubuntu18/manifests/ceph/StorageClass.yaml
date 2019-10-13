@@ -4,7 +4,7 @@ metadata:
   name: fast-rbd
 provisioner: ceph.com/rbd
 parameters:
-  monitors: 78.47.35.243:6789, 78.47.35.244:6789
+  monitors: 78.46.126.165:6789, 116.203.61.77:6789, 78.46.226.128:6789
   adminId: admin
   adminSecretName: ceph-secret
   adminSecretNamespace: kube-system
